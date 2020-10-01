@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7.3
+    environment:
+      IMAGE_NAMESPACE: fluffycat
+      IMAGE_NAME: lull
+      IMAGE_TAG: 1.0.0
+    steps:
+      - checkout
+      - run:
+          name: Setup VirtualEnv
+          command: |
+            virtualenv venv
+            . venv/bin/activate
+            pip install --no-cache-dir -r requirements.lock
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            mkdir -p test-reports/pytest
+            python3 -m pytest --junitxml=test-reports/pytest/junit.xml
+      - store_test_results:
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Determine image tag
+          command: |
+            echo 'export TAG=${IMAGE_TAG}-${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+      - run:
+          name: Build and push Docker image
+          command: |
+            docker build --pull -t $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG -t $IMAGE_NAMESPACE/$IMAGE_NAME:latest .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG
+            docker push $IMAGE_NAMESPACE/$IMAGE_NAME:latest
+workflows:
+  version: 2
+  test-then-build:
+    jobs:
+      - build

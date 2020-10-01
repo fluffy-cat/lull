@@ -1,0 +1,6 @@
+---
+tcp:
+  ssh:
+    port: 22
+sleep:
+  command: systemctl suspend
