@@ -14,7 +14,7 @@ jobs:
           command: |
             virtualenv venv
             . venv/bin/activate
-            pip install --no-cache-dir -r requirements.lock
+            pip3 install --no-cache-dir -r requirements.txt
       - run:
           name: Run tests
           command: |
