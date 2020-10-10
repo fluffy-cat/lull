@@ -15,6 +15,7 @@ jobs:
             pwd
             ls
             mkdir -p test-reports/pytest
+            pipenv install --deploy --ignore-pipfile
             pipenv run python -m pytest --junitxml=test-reports/pytest/junit.xml
       - store_test_results:
           path: test-reports
