@@ -13,8 +13,7 @@ jobs:
           name: Run tests
           command: |
             mkdir -p test-reports/pytest
-            pipenv shell --deploy --ignore-pipfile
-            python3 -m pytest --junitxml=test-reports/pytest/junit.xml
+            pipenv run --deploy --ignore-pipfile python3 -m pytest --junitxml=test-reports/pytest/junit.xml
       - store_test_results:
           path: test-reports
       - store_artifacts:
