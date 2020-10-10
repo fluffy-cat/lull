@@ -1,3 +1,0 @@
-HiYaPyCo
-apscheduler
-pytest
