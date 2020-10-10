@@ -5,12 +5,12 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def main():
-    confs = [sys.argv[1], sys.argv[2]]
+    confs = sys.argv[1:]
     conf = hiyapyco.load(confs, method=hiyapyco.METHOD_MERGE, mergelists=False, failonmissingfiles=False)
     scheduler = BlockingScheduler()
     try:
         print(conf)
-        scheduler.start()
+        # scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         pass
 
