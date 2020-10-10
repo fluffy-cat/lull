@@ -12,6 +12,8 @@ jobs:
       - run:
           name: Run tests
           command: |
+            pwd
+            ls
             mkdir -p test-reports/pytest
             pipenv run python -m pytest --junitxml=test-reports/pytest/junit.xml
       - store_test_results:
