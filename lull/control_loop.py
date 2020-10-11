@@ -12,7 +12,7 @@ class ControlLoop:
             self.isAsleep = True
 
     def is_idle(self):
-        sleep_at_time_s = self.monitors.tick()
+        sleep_at_time_s = self.monitors.current_sleep_time()
         return self.clock.time() > sleep_at_time_s
 
     def reset_monitors_after_wakeup(self):
