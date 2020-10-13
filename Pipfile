@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 hiyapyco = "*"
 pytest = "*"
-APScheduler = "*"
+plexapi = "*"
 
 [requires]
 python_version = "3.6"
