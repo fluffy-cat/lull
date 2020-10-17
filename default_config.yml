@@ -3,4 +3,10 @@ tcp:
   ssh:
     port: 22
 sleep:
-  command: systemctl suspend
+  url: http://localhost:8123
+  token: 'home assistant token'
+  switch_name: plex_node
+monitors:
+  plex:
+    url: 'http://localhost:32400'
+    token: 'plex token'

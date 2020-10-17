@@ -9,6 +9,7 @@ verify_ssl = true
 hiyapyco = "*"
 pytest = "*"
 plexapi = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"
