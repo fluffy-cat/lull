@@ -9,7 +9,7 @@ RUN pip install pipenv && \
   pipenv install --system --deploy --ignore-pipfile && \
   apk del .build-deps build-base python3-dev && \
   pip uninstall pipenv -y && \
-  apk add --no-cache tzdata
+  apk add --no-cache tzdata openssh-client
 
 COPY lull lull
 COPY bin/run.sh default_config.yml ./

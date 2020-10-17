@@ -3,4 +3,11 @@ tcp:
   ssh:
     port: 22
 sleep:
-  command: systemctl suspend
+  user: powermanager
+  host: localhost
+  private_key_path: /keys/id_rsa
+  command: sudo /bin/systemctl suspend
+monitors:
+  plex:
+    url: 'http://localhost:32400'
+    token: 'plex token'
