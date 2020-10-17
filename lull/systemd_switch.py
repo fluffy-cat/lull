@@ -1,12 +1,11 @@
-import os
+import requests
 
 
 class SystemDSwitch:
     def __init__(self, conf):
-        self.user = conf['user']
-        self.host = conf['host']
-        self.key_path = conf['private_key_path']
-        self.sleep_command = conf['command']
+        self.url = f"{conf['url']}/api/services/switch/turn_off"
+        self.payload = {"entity_id": f"switch.{conf['switch_name']}"}
+        self.headers = {"Authorization": f"Bearer {conf['token']}"}
 
     def sleep(self):
-        os.system(f'ssh -i {self.key_path} {self.user}@{self.host} \'{self.sleep_command}\'')
+        requests.post(self.url, json=self.payload, headers=self.headers)
