@@ -20,9 +20,9 @@ def clock():
 
 @pytest.fixture
 def monitors(clock):
-    return PollingMonitorStore({'sleep_after_idle_duration_s': 30, 'max_keepalive_duration_s': 120}, clock)
+    return PollingMonitorStore(30, 120, clock)
 
 
 @pytest.fixture
 def controller(monitors, switch, clock):
-    return ControlLoop(monitors, switch, clock)
+    return ControlLoop(30, monitors, switch, clock)
