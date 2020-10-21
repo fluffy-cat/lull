@@ -4,9 +4,7 @@ from plexapi.server import PlexServer
 
 
 class PlexMonitor:
-    def __init__(self, conf):
-        url = conf['url']
-        token = conf['token']
+    def __init__(self, url, token):
         self.plex = PlexServer(url, token)
 
     def current_keepalive_request_s(self):

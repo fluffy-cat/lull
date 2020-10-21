@@ -1,9 +1,9 @@
 class PollingMonitorStore:
-    def __init__(self, conf, clock):
+    def __init__(self, min_inhibitor_s, max_inhibitor_s, clock):
         self.sleep_at_time_s = 0.0
         self.clock = clock
-        self.min_inhibitor_s = conf['sleep_after_idle_duration_s']
-        self.max_inhibitor_s = conf['max_keepalive_duration_s']
+        self.min_inhibitor_s = min_inhibitor_s
+        self.max_inhibitor_s = max_inhibitor_s
         self.reset()
         self.monitors = []
 

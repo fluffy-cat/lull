@@ -1,8 +1,8 @@
 ---
-tcp:
-  ssh:
-    port: 22
-sleep:
+monitor_poll_interval_s: 30
+sleep_after_idle_duration_s: 300
+max_keepalive_duration_s: 1800
+home_assistant_switch:
   url: http://localhost:8123
   token: 'home assistant token'
   switch_name: plex_node

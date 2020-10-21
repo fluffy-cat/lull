@@ -2,11 +2,18 @@ import logging as log
 
 
 class ControlLoop:
-    def __init__(self, monitors, switch, clock):
+    def __init__(self, poll_interval_s, monitors, switch, clock):
+        self.poll_interval_s = poll_interval_s
         self.monitors = monitors
         self.switch = switch
         self.clock = clock
         self.isAsleep = False
+
+    def start(self):
+        log.info('Monitoring server for user activity')
+        while True:
+            self.tick()
+            self.clock.sleep(self.poll_interval_s)
 
     def tick(self):
         self.reset_monitors_after_wakeup()
