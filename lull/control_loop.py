@@ -1,3 +1,6 @@
+import logging as log
+
+
 class ControlLoop:
     def __init__(self, monitors, switch, clock):
         self.monitors = monitors
@@ -8,6 +11,7 @@ class ControlLoop:
     def tick(self):
         self.reset_monitors_after_wakeup()
         if self.is_idle():
+            log.info('System is now idle. Sending sleep command')
             self.switch.sleep()
             self.isAsleep = True
 
@@ -17,5 +21,6 @@ class ControlLoop:
 
     def reset_monitors_after_wakeup(self):
         if self.isAsleep:
+            log.info('System is now awake. Resetting monitors')
             self.monitors.reset()
             self.isAsleep = False

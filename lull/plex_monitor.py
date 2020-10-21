@@ -1,3 +1,5 @@
+import logging as log
+
 from plexapi.server import PlexServer
 
 
@@ -9,6 +11,8 @@ class PlexMonitor:
 
     def current_keepalive_request_s(self):
         if self.is_active():
+            log.info(
+                f'Plex is active with {len(self.plex.sessions())} sessions and {len(self.plex.activities)} activities')
             return 1
         else:
             return 0
