@@ -1,4 +1,4 @@
-import logging as log
+import logging
 import logging.config
 import sys
 import time
@@ -23,7 +23,7 @@ def main():
     try:
         controller.start()
     except (KeyboardInterrupt, SystemExit):
-        log.warning('Control loop interrupted. Shutting down lull monitor')
+        logging.warning('Control loop interrupted. Shutting down lull monitor')
         pass
 
 

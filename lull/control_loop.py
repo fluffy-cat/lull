@@ -1,4 +1,5 @@
 import logging as log
+from datetime import datetime
 
 
 class ControlLoop:
@@ -24,6 +25,7 @@ class ControlLoop:
 
     def is_idle(self):
         sleep_at_time_s = self.monitors.current_sleep_time()
+        log.info(f'System scheduled to sleep at {datetime.fromtimestamp(sleep_at_time_s)}')
         return self.clock.time() > sleep_at_time_s
 
     def reset_monitors_after_wakeup(self):
