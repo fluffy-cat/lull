@@ -1,4 +1,5 @@
 import logging as log
+import logging.config
 import sys
 import time
 
@@ -11,6 +12,7 @@ from lull.systemd_switch import SystemDSwitch
 
 
 def main():
+    logging.config.fileConfig('/config/logging.ini')
     confs = sys.argv[1:]
     conf = hiyapyco.load(confs, method=hiyapyco.METHOD_MERGE, mergelists=False, failonmissingfiles=False)
     switch = create_standby_switch(conf['home_assistant_switch'])
