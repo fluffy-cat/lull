@@ -11,8 +11,12 @@ class PollingMonitorStore:
         self.sleep_at_time_s = self.clock.time() + self.min_inhibitor_s
 
     def current_sleep_time(self):
-        sleep_at_times = [self.calculate_sleep_time(m.current_keepalive_request_s()) for m in self.monitors if
-                          m.current_keepalive_request_s() > 0]
+        sleep_at_times = []
+        for m in self.monitors:
+            keepalive_request_s = m.current_keepalive_request_s()
+            if m.current_keepalive_request_s() > 0:
+                sleep_time = self.calculate_sleep_time(keepalive_request_s)
+                sleep_at_times.append(sleep_time)
         sleep_at_times.append(self.sleep_at_time_s)
         self.sleep_at_time_s = max(sleep_at_times)
         return self.sleep_at_time_s
