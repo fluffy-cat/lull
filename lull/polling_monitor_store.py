@@ -14,7 +14,7 @@ class PollingMonitorStore:
         sleep_at_times = []
         for m in self.monitors:
             keepalive_request_s = m.current_keepalive_request_s()
-            if m.current_keepalive_request_s() > 0:
+            if keepalive_request_s > 0:
                 sleep_time = self.calculate_sleep_time(keepalive_request_s)
                 sleep_at_times.append(sleep_time)
         sleep_at_times.append(self.sleep_at_time_s)
