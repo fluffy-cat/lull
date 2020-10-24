@@ -1,4 +1,8 @@
+import logging as log
+
 import requests
+
+REQUEST_TIMEOUT_S = 5
 
 
 class SystemDSwitch:
@@ -8,4 +12,7 @@ class SystemDSwitch:
         self.headers = {"Authorization": f"Bearer {token}"}
 
     def sleep(self):
-        requests.post(self.url, json=self.payload, headers=self.headers)
+        try:
+            requests.post(self.url, json=self.payload, headers=self.headers, timeout=REQUEST_TIMEOUT_S)
+        except requests.exceptions.Timeout as e:
+            log.info(f'Shutdown request timeout after {REQUEST_TIMEOUT_S}s: {e}')
