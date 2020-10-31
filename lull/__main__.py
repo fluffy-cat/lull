@@ -4,11 +4,13 @@ import sys
 import time
 
 import hiyapyco
+import psutil
 
 from lull.control_loop import ControlLoop
 from lull.plex_monitor import PlexMonitor
 from lull.polling_monitor_store import PollingMonitorStore
 from lull.systemd_switch import SystemDSwitch
+from lull.tcp_monitor import TCPMonitor
 
 
 def main():
@@ -35,6 +37,8 @@ def create_monitors(conf):
     monitors = []
     if conf['plex']:
         monitors.append(create_plex_monitor(conf['plex']))
+    if conf['tcp']:
+        monitors.append(create_tcp_monitor(conf['tcp']))
     return monitors
 
 
@@ -47,6 +51,10 @@ def create_monitor_storage(conf, clock, monitors):
 
 def create_standby_switch(conf):
     return SystemDSwitch(conf['url'], conf['switch_name'], conf['token'])
+
+
+def create_tcp_monitor(conf):
+    return TCPMonitor(conf['ports'], psutil)
 
 
 def create_plex_monitor(conf):

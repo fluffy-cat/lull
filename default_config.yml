@@ -10,3 +10,6 @@ monitors:
   plex:
     url: 'http://localhost:32400'
     token: 'plex token'
+  tcp:
+    ports:
+      - 22

@@ -10,6 +10,7 @@ hiyapyco = "*"
 pytest = "*"
 plexapi = "*"
 requests = "*"
+psutil = "*"
 
 [requires]
 python_version = "3.6"
