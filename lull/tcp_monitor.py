@@ -1,3 +1,6 @@
+import logging as log
+
+
 class TCPMonitor:
     def __init__(self, ports, psutil):
         self.ports = ports
@@ -6,6 +9,7 @@ class TCPMonitor:
     def current_keepalive_request_s(self):
         for c in self.psutil.net_connections(kind="tcp"):
             if self.is_active(c):
+                log.info(f'{c.raddr.ip} connected to port {c.laddr.port}')
                 return 1
         return 0
 
