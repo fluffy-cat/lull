@@ -35,9 +35,9 @@ def create_control_loop(conf, monitors, switch, clock):
 
 def create_monitors(conf):
     monitors = []
-    if conf['plex']:
+    if 'plex' in conf:
         monitors.append(create_plex_monitor(conf['plex']))
-    if conf['tcp']:
+    if 'tcp' in conf:
         monitors.append(create_tcp_monitor(conf['tcp']))
     return monitors
 
