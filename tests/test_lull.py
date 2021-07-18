@@ -7,6 +7,27 @@ def test_shouldSleepOnlyAfterIdleTimeout_whenThereAreNoMonitors(controller, swit
     assert_sleep_at_time(31.0, clock, controller, switch)
 
 
+def test_shouldNotResetMonitor_whenLessThanOr4XThePollIntervalHasElapsed(controller, switch, clock, monitors):
+    mon = Mock()
+    monitors.add(mon)
+    mon.current_keepalive_request_s.return_value = 4 * 30.0 + 1
+
+    assert_no_sleep_at_time(0.0, clock, controller, switch)
+    assert_no_sleep_at_time(4 * 30 - 1, clock, controller, switch)
+    monitors.reset.assert_not_called()
+    assert_no_sleep_at_time(4 * 30, clock, controller, switch)
+    monitors.reset.assert_not_called()
+
+def test_shouldResetMonitor_whenMoreThan4XThePollIntervalHasElapsed(controller, switch, clock, monitors):
+    mon = Mock()
+    monitors.add(mon)
+    mon.current_keepalive_request_s.return_value = 4 * 30.0 + 2
+
+    assert_no_sleep_at_time(0.0, clock, controller, switch)
+    assert_no_sleep_at_time(4 * 30 + 1, clock, controller, switch)
+    monitors.reset.assert_called_once()
+
+
 def test_shouldSleepAgainAfterIdleTimeout_whenSystemHasWokenUpFromTheFirstSleep(controller, switch, clock):
     assert_sleep_at_time(31.0, clock, controller, switch)
     assert_no_sleep_at_time(1000.0, clock, controller, switch)

@@ -8,7 +8,7 @@ class ControlLoop:
         self.monitors = monitors
         self.switch = switch
         self.clock = clock
-        self.isAsleep = False
+        self.last_tick_s = clock.time()
 
     def start(self):
         log.info('Monitoring server for user activity')
@@ -18,10 +18,10 @@ class ControlLoop:
 
     def tick(self):
         self.reset_monitors_after_wakeup()
+        self.last_tick_s = self.clock.time()
         if self.is_idle():
             log.info('System is now idle. Sending sleep command')
             self.switch.sleep()
-            self.isAsleep = True
 
     def is_idle(self):
         sleep_at_time_s = self.monitors.current_sleep_time()
@@ -29,7 +29,10 @@ class ControlLoop:
         return self.clock.time() > sleep_at_time_s
 
     def reset_monitors_after_wakeup(self):
-        if self.isAsleep:
+        if self.isAsleep():
             log.info('System is now awake. Resetting monitors')
             self.monitors.reset()
-            self.isAsleep = False
+
+    # Assume system was asleep if more than 4 poll intervals has elapsed and tick was not called
+    def isAsleep(self):
+        return self.clock.time() > self.last_tick_s + self.poll_interval_s * 4

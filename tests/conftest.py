@@ -20,7 +20,7 @@ def clock():
 
 @pytest.fixture
 def monitors(clock):
-    return PollingMonitorStore(30, 120, clock)
+    return Mock(wraps=PollingMonitorStore(30, 120, clock))
 
 
 @pytest.fixture
