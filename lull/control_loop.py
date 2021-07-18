@@ -8,6 +8,7 @@ class ControlLoop:
         self.monitors = monitors
         self.switch = switch
         self.clock = clock
+        self.is_asleep = False
         self.last_tick_s = clock.time()
 
     def start(self):
@@ -22,6 +23,7 @@ class ControlLoop:
         if self.is_idle():
             log.info('System is now idle. Sending sleep command')
             self.switch.sleep()
+            self.is_asleep = True
 
     def is_idle(self):
         sleep_at_time_s = self.monitors.current_sleep_time()
@@ -29,10 +31,15 @@ class ControlLoop:
         return self.clock.time() > sleep_at_time_s
 
     def reset_monitors_after_wakeup(self):
-        if self.isAsleep():
+        if self.is_resumed_from_sleep():
             log.info('System is now awake. Resetting monitors')
             self.monitors.reset()
+            self.is_asleep = False
 
-    # Assume system was asleep if more than 4 poll intervals has elapsed and tick was not called
-    def isAsleep(self):
-        return self.clock.time() > self.last_tick_s + self.poll_interval_s * 4
+    def is_resumed_from_sleep(self):
+        """ Determine if system has just woken up from a sleep
+
+        If lull application has put the system to sleep, then we can identify an awakened system by the is_asleep flag.
+        Otherwise, we can assume the system was asleep if more than 4 poll intervals has elapsed and tick was not called
+        """
+        return self.is_asleep or self.clock.time() > self.last_tick_s + self.poll_interval_s * 4
