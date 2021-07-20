@@ -24,7 +24,7 @@ class NetworkMonitor:
             return 0
 
     def current_traffic_mb(self):
-        total_traffic = self.psutil.net_io_counters().bytes_sent() + self.psutil.net_io_counters().bytes_recv()
+        total_traffic = self.psutil.net_io_counters().bytes_sent + self.psutil.net_io_counters().bytes_recv
         traffic = total_traffic - self.last_traffic
         self.last_traffic = total_traffic
         return self.to_mb(traffic)
