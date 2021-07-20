@@ -18,7 +18,7 @@ class NetworkMonitor:
             return 0
         activity_mbps = traffic_mb / elapsed_s
         if activity_mbps > self.idle_threshold_mbps:
-            log.info(f'Network is active ({activity_mbps} Mbps)')
+            log.info(f'Network is active ({activity_mbps:.3f} Mbps)')
             return 1
         else:
             return 0
