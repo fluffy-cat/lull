@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.9
+      - image: circleci/python:3.9.5
     environment:
       IMAGE_NAMESPACE: fluffycat
       IMAGE_NAME: lull
