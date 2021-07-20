@@ -39,7 +39,7 @@ class ControlLoop:
     def is_resumed_from_sleep(self):
         """ Determine if system has just woken up from a sleep
 
-        If lull application has put the system to sleep, then we can identify an awakened system by the is_asleep flag.
-        Otherwise, we can assume the system was asleep if more than 4 poll intervals has elapsed and tick was not called
+        If lull has put the system to sleep, then we can identify an awakened system by the is_asleep flag. Otherwise,
+        we can assume the system was asleep if tick was not called for a prolonged period.
         """
         return self.is_asleep or self.clock.time() > self.last_tick_s + self.poll_interval_s * 4

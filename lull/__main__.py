@@ -7,6 +7,7 @@ import hiyapyco
 import psutil
 
 from lull.control_loop import ControlLoop
+from lull.network_monitor import NetworkMonitor
 from lull.plex_monitor import PlexMonitor
 from lull.polling_monitor_store import PollingMonitorStore
 from lull.systemd_switch import SystemDSwitch
@@ -39,6 +40,8 @@ def create_monitors(conf):
         monitors.append(create_plex_monitor(conf['plex']))
     if 'tcp' in conf:
         monitors.append(create_tcp_monitor(conf['tcp']))
+    if 'network' in conf:
+        monitors.append(create_network_monitor(conf['network']))
     return monitors
 
 
@@ -59,6 +62,10 @@ def create_tcp_monitor(conf):
 
 def create_plex_monitor(conf):
     return PlexMonitor(conf['url'], conf['token'])
+
+
+def create_network_monitor(conf):
+    return NetworkMonitor(conf['activity_threshold_mbps'], psutil, time)
 
 
 if __name__ == '__main__':
